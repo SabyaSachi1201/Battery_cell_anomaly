@@ -1,0 +1,133 @@
+Link to New battery dataset : https://www.kaggle.com/datasets/xiangdongyuan/battery-temperature-analysis/data
+
+Column Analysis
+
+ts (Timestamp):
+
+Unix timestamp in milliseconds (e.g., 1624637940000)
+Data shows regular sampling intervals with gaps of approximately 100-200 seconds
+
+
+tv (Battery Voltage):
+
+Range: 40.5V to 85.8V with an average of 79.14V
+Distribution is concentrated between 70V-85V
+Strong correlation with SOC (higher voltage at higher SOC)
+
+
+soc (State of Charge):
+
+Range: 0-100%
+Average: 73.18%
+Directly related to crc/afp ratio
+
+
+soe (State of Energy):
+
+Range: 0-99%
+Average: 69.42%
+Very closely matches the calculated cre/afp ratio (within ~0.5%)
+
+
+soh (State of Health):
+
+Range: 0-100% with most values around 98-100%
+Slight degradation visible over cycles
+
+
+ct (Battery Cycles):
+
+Range: 0-122 cycles
+46 unique cycle values recorded
+Non-linear progression suggests selective testing at specific cycle counts
+
+
+afp (Actual Full Battery Capacity):
+
+Range: 0-1998 (units likely Ah)
+Discrete values: 0, 1818, 1843, 1859, 1865, 1881, 1892, 1998
+Shows degradation pattern over cycles
+
+
+crc (Current Remaining Capacity):
+
+Range: 0-27.5 (units likely Ah)
+Directly correlates with SOC (crc/afp ≈ soc/100)
+
+
+act (Average Cell Temperature):
+
+Range: 0-62°C with average of 30.6°C
+Monitoring suggests thermal management testing
+
+
+ct.1 (appears to be charging times):
+
+Duplicate column name in original dataset
+
+
+afc (Actual Full Capacity):
+
+Range: 0-27 (likely Ah per cell)
+Consistent ratio with afp suggests pack configuration
+
+
+cre (Current Remaining Energy):
+
+Range: 0-1992 (likely Wh)
+Directly relates to SOE (cre/afp ≈ soe/100)
+
+
+
+Battery Model Identification
+Based on the voltage range (40.5V-85.8V) and capacity values, this appears to be a lithium-ion battery pack for electric vehicle applications, likely with these characteristics:
+
+Chemistry: Lithium-ion (based on voltage curve and SOC-voltage relationship)
+Configuration: Approximately 20-24 cells in series (based on max voltage ~85.8V)
+Capacity: ~2000Ah (pack level) with ~27Ah per cell
+Energy: ~1992Wh at full charge
+Application: Most likely an electric vehicle battery or stationary energy storage system
+
+Experimental Considerations
+The relationship between AFP and CRC reveals important experimental conditions:
+
+Aging Testing: The data shows controlled cycling (0-122 cycles) with capacity measurements
+Temperature Range: Tests conducted between ambient temperature and 62°C
+Sampling Methodology:
+
+Regular sampling intervals (mostly ~100-200 seconds)
+Data collection focused on specific cycle counts
+
+
+Capacity Degradation:
+
+Initial capacity: 1998 (likely Ah)
+After 24 cycles: reduced to 1859 (-7%)
+Non-linear pattern suggests different testing regimes or conditions
+
+
+Charge/Discharge Protocol:
+
+Complete cycles recorded
+Multiple charging events (ct.1) within each cycle
+Data includes both charging and discharging phases (based on voltage patterns)
+
+
+
+The relationship between SOC and voltage shows a typical lithium-ion curve with:
+
+Steep rise between 90-100% SOC
+More gradual slope in mid-range (30-70%)
+Steeper decline below 20%
+
+Key Insights
+
+The perfect matching between SOE and calculated cre/afp ratios (difference ~0.5%) confirms the energy calculation methodology.
+The SOH values show minimal degradation in early cycles, suggesting:
+
+Either a robust battery design
+Or controlled testing conditions minimizing stress factors
+
+
+The non-linear progression of cycle counts indicates selective testing at specific milestones rather than continuous cycling.
+The discrete AFP values suggest the battery underwent distinct capacity loss events, possibly related to specific test conditions or cell balancing procedures.
